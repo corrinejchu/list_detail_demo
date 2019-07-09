@@ -51,12 +51,13 @@ public class DeliveryListActivity extends AppCompatActivity implements DeliveryL
 
     @Override
     public void reloadDeliveryList() {
-        superRecyclerView.setRefreshing(true);
+        superRecyclerView.setLoadingMore(false);
         deliveryList.clear();
+        listAdapter.notifyDataSetChanged();
         deliveryPresenter.resetOffset();
 
         loadDeliverylistData();
-        superRecyclerView.setLoadingMore(true);
+        superRecyclerView.setRefreshing(true);
     }
 
     @Override
@@ -105,6 +106,12 @@ public class DeliveryListActivity extends AppCompatActivity implements DeliveryL
         return true;
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
     private void bindview() {
         superRecyclerView = (SuperRecyclerView) findViewById(R.id.recyclerViews_delivery_list);
         toolbar = (Toolbar) findViewById(R.id.toolbar_delivery_list);
@@ -143,6 +150,13 @@ public class DeliveryListActivity extends AppCompatActivity implements DeliveryL
         superRecyclerView.setupMoreListener(new OnMoreListener() {
             @Override
             public void onMoreAsked(int overallItemsCount, int itemsBeforeMore, int maxLastVisiblePosition) {
+
+                if (overallItemsCount == 0 || deliveryPresenter.getOffset() > overallItemsCount) {
+                    superRecyclerView.hideMoreProgress();
+                    superRecyclerView.setLoadingMore(false);
+                    return;
+                }
+
                 loadDeliverylistData();
             }
         }, 2);

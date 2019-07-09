@@ -18,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.appbar.AppBarLayout;
 
@@ -57,9 +58,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         }
 
         LatLng address = new LatLng(deliveryDetailModel.getLocation().getLat(), deliveryDetailModel.getLocation().getLng());
-        mMap.addMarker(new MarkerOptions().position(address).title(deliveryDetailModel.getLocation().getAddress()));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(address));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(address, 16));
+        Marker marker = mMap.addMarker(new MarkerOptions().position(address).title(deliveryDetailModel.getLocation().getAddress()).snippet(deliveryDetailModel.getDescription()));
+        marker.showInfoWindow();
 
     }
 
@@ -67,6 +69,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     private void bindview(){

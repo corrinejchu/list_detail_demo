@@ -58,4 +58,8 @@ dependencies {
 //    testImplementation 'androidx.test:rules:1.1.0'
 //    testImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 
+    //Memory management
+//    implementation 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+
+
 }

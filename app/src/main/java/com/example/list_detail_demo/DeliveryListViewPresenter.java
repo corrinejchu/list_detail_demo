@@ -1,7 +1,6 @@
 package com.example.list_detail_demo;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.example.list_detail_demo.api.ApiManager;
 import com.example.list_detail_demo.model.DeliveryDetailModel;
@@ -25,13 +24,11 @@ public class DeliveryListViewPresenter implements DeliveryListContract.DeliveryL
 
     @Override
     public void loadDeliveryListData(Context context) {
-        Log.e("presenter", "pre load api data");
         ApiManager.getInstance().getDeliveryList(offset, limit, new Callback<List<DeliveryDetailModel>>(){
 
             @Override
             public void onResponse(Call<List<DeliveryDetailModel>> call, Response<List<DeliveryDetailModel>> response) {
                 List<DeliveryDetailModel> listData = response.body();
-                Log.e("presenter", "got load api data");
 
                 //Update View...
                 if (listData != null) {
