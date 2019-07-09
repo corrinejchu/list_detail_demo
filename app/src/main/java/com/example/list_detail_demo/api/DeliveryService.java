@@ -10,7 +10,6 @@ import retrofit2.http.Query;
 
 public interface DeliveryService {
 
-//    @Headers("Accept: application/json")
     @GET("/deliveries")
     Call<List<DeliveryDetailModel>> getDeliveryList(@Query("offset") int offset,
                                                    @Query("limit") int limit);

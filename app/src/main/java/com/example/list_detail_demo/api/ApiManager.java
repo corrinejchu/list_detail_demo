@@ -21,10 +21,6 @@ public class ApiManager {
     }
 
     private ApiManager() {
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//
-//        OkHttpClient client = httpClient.build();
-
         Retrofit retrofit = new retrofit2.Retrofit.Builder()
                 .baseUrl("https://mock-api-mobile.dev.lalamove.com")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,7 +29,7 @@ public class ApiManager {
          deliverService = retrofit.create(DeliveryService.class);
     }
 
-    //Delivery: listing: from = 0, size = 10
+    //Delivery: listing:
     public void getDeliveryList(int offset, int limit, Callback<List<DeliveryDetailModel>> callback) {
         Call<List<DeliveryDetailModel>> listCallback = deliverService.getDeliveryList(offset, limit);
         listCallback.enqueue(callback);
